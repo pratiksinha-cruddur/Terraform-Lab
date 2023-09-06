@@ -46,11 +46,17 @@ resource "aws_instance" "terraform-lab" {
     private_key = "${file("C:/Users/User/.ssh/terraform")}"
     host     = self.public_ip
   }
-  provisioner "remote-exec" {
+
+  provisioner "file" {
+    content     = "ami used: ${self.ami}"
+    destination = "/home/ec2-user/output.txt"
+  }
+  
+  /* provisioner "remote-exec" {
     inline = [
       "echo ${self.private_ip} >> /home/ec2-user/private_ips.txt"
     ]
-  }
+  } */
 
   tags = {
     Name = "Terraform-${local.project_name}"
