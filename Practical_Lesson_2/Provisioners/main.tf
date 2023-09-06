@@ -1,11 +1,11 @@
 terraform {
-  cloud {
+  /*cloud {
     organization = "pratiksinha-org"
 
     workspaces {
       name = "provisioners"
     }
-  }
+  }*/
 
   required_providers {
     aws = {
@@ -32,12 +32,25 @@ resource "aws_key_pair" "deployer" {
   public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDDup83PJ7Jb99/NSSLzvWDhKwSIYD4FjSBg5dgKp+BKJ2EuTXPccy4yHSXVaOmAArGMu6YE31YqOpDcnildAEjxb0qTFEfIufpiaMPXbpkmsyJxUbUbHNPu0TgCUgPHmBxDTplzOb+CuM11QVX2tkaaERhF4TRkjpwuXfv4MTuj/9/oMqlLQ3LqKUXdbfLJYKWlrLLPQlll8nvLnB3m9MO61+Hl5iClxOEBrcyJ5EgNYnVyYjbGWmWwfzCzrltBlhOMULiLss0N2seWLfuyODMltg3zwrL/CosU/hAGehK23EubpwLbc6I38wdxKg2qSMDH3s0gzFRWOZqVKcIWgU/PvYVB0c8rVjZe+80A2085mT9Das3GwGk+rt1+jytlwr2sp+jRapfKTSr+5JufMegLISkMjcsNIOSyt/OqEIpQIU6dHQlR9rzoWVzcCCD3mkyEWbW9Don9G5Nb1KIfG60hb2hMEkz/W/P9LsJ8+CJH9mFldJW6bWEvmTD3/PtSxU= User@Lenovo-PC"
 }
 
+
 resource "aws_instance" "terraform-lab" {
   ami                    = "ami-0f409bae3775dc8e5"
   instance_type          = "t2.micro"
   key_name               = aws_key_pair.deployer.key_name
   vpc_security_group_ids = [aws_security_group.sg-my-server.id]
   user_data              = data.template_file.user_data.rendered
+
+  connection {
+    type     = "ssh"
+    user     = "ec2-user"
+    private_key = "${file("C:/Users/User/.ssh/terraform")}"
+    host     = self.public_ip
+  }
+  provisioner "remote-exec" {
+    inline = [
+      "echo ${self.private_ip} >> /home/ec2-user/private_ips.txt"
+    ]
+  }
 
   tags = {
     Name = "Terraform-${local.project_name}"
