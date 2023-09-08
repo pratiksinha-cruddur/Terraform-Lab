@@ -16,8 +16,8 @@ variable "instance_type" {
   description = "Enter Instance type e.g. (t2.small/t2.micro/m1.small)"
   //sensitive = false
   validation {
-    condition = can(regex("^t3.", var.instance_type))
-    error_message = "Entered Instance type must be valid and must start with t3." 
+    condition = can(regex("^t2.", var.instance_type))
+    error_message = "Entered Instance type must be valid and must start with t2." 
   }
 }
 
@@ -37,6 +37,8 @@ resource "aws_instance" "terraform-lab" {
 
 output "public_ip" {
   value = aws_instance.terraform-lab.public_ip
+  description = "Public IP of the instance"
+  sensitive = true
 }
 
 locals {
