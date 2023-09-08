@@ -1,4 +1,4 @@
-/* terraform {
+terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
@@ -6,14 +6,12 @@
     }
   }
 }
- */
 
-/* provider "aws" {
+provider "aws" {
   region = "us-east-1"
 }
- */
 
-/* variable "instance_type" {
+variable "instance_type" {
   type    = string
   description = "Enter Instance type e.g. (t2.small/t2.micro/m1.small)"
   //sensitive = false
@@ -22,14 +20,13 @@
     error_message = "Entered Instance type must be valid and must start with t2." 
   }
 }
- */
-/* variable "ami" {
+
+variable "ami" {
   type    = string
   description = "AMI For the Instance type "
 }
- */
 
-/* resource "aws_instance" "terraform-lab" {
+resource "aws_instance" "my_server" {
   ami                    = var.ami
   instance_type          = var.instance_type
 
@@ -37,23 +34,11 @@
     Name = "Terraform ${local.project_name}"
   }
 }
- */
-
-
-/* locals {
-  project_name = "Variables and Outputs"
-} */
-
-terraform {
-}
-
-module "aws_server" {
-  source = ".//aws_server"
-  instance_type = "t2.micro"
-  ami                    = "ami-0f409bae3775dc8e5"
-}
 
 output "public_ip" {
-  value = module.aws_server.public_ip
-  //sensitive = true
+  value = aws_instance.my_server.public_ip
+}
+
+locals {
+  project_name = "Submodules"
 }
