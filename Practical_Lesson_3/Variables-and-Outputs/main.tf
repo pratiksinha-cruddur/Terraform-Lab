@@ -48,9 +48,9 @@ terraform {
 }
 
 module "aws_server" {
-  source = ".//aws_server"
+  source        = ".//aws_server"
   instance_type = "t2.micro"
-  ami                    = "ami-0f409bae3775dc8e5"
+  ami           = "ami-0f409bae3775dc8e5"
 }
 
 output "public_ip" {

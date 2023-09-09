@@ -32,6 +32,7 @@ resource "aws_instance" "my_server" {
 
   tags = {
     Name = "Terraform ${local.project_name}"
+    Other_Name = "${local.sub_project_name}"
   }
 }
 
@@ -41,4 +42,5 @@ output "public_ip" {
 
 locals {
   project_name = "Submodules"
+  sub_project_name = "Local Variables"
 }
