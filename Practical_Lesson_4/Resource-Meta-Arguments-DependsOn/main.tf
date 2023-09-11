@@ -15,15 +15,14 @@ resource "aws_instance" "my_server" {
   //ami           = "ami-0f409bae3775dc8e5"
   ami           = "ami-01c647eace872fc02"
   instance_type = "t2.micro"
+  depends_on = [
+    aws_s3_bucket.my_bucket
+  ]
 }
 
 resource "aws_s3_bucket" "my_bucket" {
   bucket = "my-tf-test-bucket-by-psh"
   force_destroy = true
-  acl = "private"
-  depends_on = [
-    aws_instance.my_server
-  ]
 }
 
 output "public_ip" {
