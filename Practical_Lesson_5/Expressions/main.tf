@@ -19,3 +19,7 @@ variable "name" {
     type = string
 }
 
+variable "worlds_maps" {
+    type = map
+}
+
