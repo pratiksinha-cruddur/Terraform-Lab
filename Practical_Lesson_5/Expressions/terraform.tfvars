@@ -8,3 +8,10 @@ worlds_maps = {
 }
  
 name = "Corleone"
+
+worlds_splat = [
+    {mars_name : "barsoon", earth_name : "mars"},
+    {mars_name :"jasoom", earth_name : "earth"},
+    {mars_name : "sasoom", earth_name : "jupiter"},
+    {mars_name :"casoom", earth_name : "venus"}
+]

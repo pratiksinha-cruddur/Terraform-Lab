@@ -23,3 +23,6 @@ variable "worlds_maps" {
     type = map
 }
 
+variable "worlds_splat" {
+    type = list
+}
